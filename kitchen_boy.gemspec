@@ -32,5 +32,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec',       '>= 3.0.0.beta1'
   s.add_development_dependency 'gem-release', '~> 0.7.1'
 
-  s.add_dependency             'methadone',   '~> 1.3'
+  s.add_dependency             'gli',         '~> 2.8'
 end

@@ -1,43 +1,41 @@
 #!/usr/bin/env ruby
 
-require 'optparse'
-require 'methadone'
+require 'gli'
 require 'kitchen_boy.rb'
 
-class App
-  include Methadone::Main
-  include Methadone::CLILogging
+include GLI::App
 
-  main do # Add args you want: |like,so|
-    # your program code here
-    # You can access CLI options via
-    # the options Hash
-  end
+program_desc "Run, write, store and share recepies to run on your projects."
 
-  # supplemental methods here
+version KitchenBoy::VERSION
 
-  # Declare command-line interface here
-
-  description "Run, write, store and share recepies to run on your projects."
-
-  # Accept flags via:
-  # on("--flag VAL","Some flag")
-  # options[flag] will contain VAL
-  #
-  # Specify switches via:
-  # on("--[no-]switch","Some switch")
-  #
-  # Or, just call OptionParser methods on opts
-  #
-  # Require an argument
-  # arg :some_arg 
-  #
-  # # Make an argument optional
-  # arg :optional_arg, :optional
-
-  version KitchenBoy::VERSION
-
-  use_log_level_option
-
-  go!
+desc "Update recepies"
+long_desc <<-STRING
+Fetch kitchen_boy default recipies together with the ones you specified
+in $HOME/.kitchen_boy/recipe_books"
+STRING
+command :update do |c|
 end
+
+pre do |global,command,options,args|
+  # Pre logic here
+  # Return true to proceed; false to abort and not call the
+  # chosen command
+  # Use skips_pre before a command to skip this block
+  # on that command only
+  true
+end
+
+post do |global,command,options,args|
+  # Post logic here
+  # Use skips_post before a command to skip this
+  # block on that command only
+end
+
+on_error do |exception|
+  # Error logic here
+  # return false to skip default error handling
+  true
+end
+
+exit run(ARGV)
