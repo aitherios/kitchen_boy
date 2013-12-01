@@ -25,11 +25,12 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.rubyforge_project = '[none]'
 
-  s.add_development_dependency 'bundler',   '~> 1.3'
-  s.add_development_dependency 'rake',      '~> 10.1'
-  s.add_development_dependency 'rdoc',      '~> 4.0'
-  s.add_development_dependency 'aruba',     '~> 0.5'
-  s.add_development_dependency 'rspec',     '>= 3.0.0.beta1'
+  s.add_development_dependency 'bundler',     '~> 1.3'
+  s.add_development_dependency 'rake',        '~> 10.1'
+  s.add_development_dependency 'rdoc',        '~> 4.0'
+  s.add_development_dependency 'aruba',       '~> 0.5'
+  s.add_development_dependency 'rspec',       '>= 3.0.0.beta1'
+  s.add_development_dependency 'gem-release', '~> 0.7.1'
 
-  s.add_dependency             'methadone', '~> 1.3'
+  s.add_dependency             'methadone',   '~> 1.3'
 end
