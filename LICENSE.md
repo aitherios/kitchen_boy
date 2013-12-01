@@ -1,7 +1,7 @@
 DUAL LICENSED: GPLv3 and MIT
 ====
 
-## The GNU Public License, Version 3 (GPL3)
+## The GNU Public License, Version 3 (GPL-3)
 
 Copyright (c) Renan Mendes Carvalho <aitherios@gmail.com>
 
@@ -12,7 +12,7 @@ any later version.
 
 This program is distributed in the hope that it will be useful, but 
 WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
-FITNESS FOR A PARTICULAR PURPOSE.  
+FITNESS FOR A PARTICULAR PURPOSE.
 See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with 
