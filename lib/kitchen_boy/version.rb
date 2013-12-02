@@ -1,3 +1,3 @@
-module KitchenBoy
+class KitchenBoy
   VERSION = "0.0.1"
 end

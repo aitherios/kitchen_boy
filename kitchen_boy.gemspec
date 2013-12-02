@@ -11,8 +11,8 @@ Gem::Specification.new do |s|
   s.authors       = ['Renan Mendes Carvalho']
   s.email         = ['aitherios@gmail.com']
   s.homepage      = 'https://github.com/aitherios/kitchen_boy'
-  s.summary       = "Run, write, store and share recepies to run on your projects."
-  s.description   = "kitchen_boy is a way to package and run project recepies. " +
+  s.summary       = "Run, write, store and share recipes to run on your projects."
+  s.description   = "kitchen_boy is a way to package and run project recipes. " +
                     "Installing a gem and running default generators or " +
                     "customizing configuration to fit your needs."
   s.licenses      = ['MIT', 'GPL-3']

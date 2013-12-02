@@ -6,9 +6,6 @@
  
 Run, write, store and share recepies to run on your projects.
 
-If you always open GitHub to remember the name of that generator in
-the middle of a gem installation get kitchen_boy to remember for you.
-
 ## Installation
 
 Install the gem
@@ -38,3 +35,7 @@ First of all, **thank you** for wanting to help and reading this!
 5. Commit your changes - `git commit -am "Added some magic"`
 6. Push the branch to Github - `git push origin adding_magic`
 7. Send a [pull request](https://help.github.com/articles/using-pull-requests)! :heart: :sparkling_heart: :heart:
+
+## License
+
+Dual licensed: MIT and GPL-3. See LICENSE.md for further details.

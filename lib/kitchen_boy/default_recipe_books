@@ -1,0 +1,8 @@
+## Add an external recipe book from a git repository with:
+#  git 'https://github.com/aitherios/kitchen_boy_recipe_book'
+#
+## Add an external recipe book from a github repository with:
+#  github 'aitherios/kitchen_boy_recipe_book'
+#
+## Add an external recipe book from a local directory with:
+#  directory '/home/users/kitchen_boy/weird_recipe_book'

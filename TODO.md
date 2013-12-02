@@ -5,11 +5,8 @@
 
 # Tasks:
 
-* Checkout arruba
-* Test a simple cli app, string output
-
-* Checkout ways to build cli apps
-* Create a simple cli app
+* Use kitchen_boy to automaticaly create the repository location on
+  your home
 
 # Release checklist:
 
