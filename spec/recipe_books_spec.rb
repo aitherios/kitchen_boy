@@ -39,8 +39,8 @@ describe KitchenBoy::RecipeBooks do
         it { expect(@config.recipe_books).not_to include(malformed_git_repo) }
         it { expect(@config.recipe_books).not_to include(github_shorthand) }
         it { expect(@config.recipe_books).to include(git_repo) }
-        it { expect(@output).to include("Is this git repo correct?") }
-        it { expect(@output).to include("Is this github shorthand correct?") }
+        it { expect(@output).to include("is this git repo correct?") }
+        it { expect(@output).to include("is this github shorthand correct?") }
       end
     end
 
@@ -57,16 +57,52 @@ describe KitchenBoy::RecipeBooks do
       it { expect(@config.recipe_books.count).to eq(2) }
     end
 
-    context "when there is directory" do
+    context "when there is readable directory" do
+      let(:readonly_dir) { File.join($home_dir, 'readonly_dir') }
+      let(:unreadable_dir) { File.join($home_dir, 'unreadable_dir') }
+      let(:inexistent_dir) { File.join($home_dir, 'inexistent_dir') }
+      
       before do
+        Dir.mkdir(readonly_dir, 0444)
+        
         write_recipe_books_file @config, <<-STRING
-          directory '/users'
+          directory '#{readonly_dir}'
         STRING
 
         KitchenBoy::RecipeBooks.new(@config).load_recipe_books
       end
 
-      context "that can't be read"
+      after do
+        FileUtils.chmod(0777, readonly_dir)
+        Dir.rmdir(readonly_dir)
+      end
+
+      it { expect(@config.recipe_books).to include(readonly_dir) }
+
+      context "that can't be accessed" do
+        before do
+          Dir.mkdir(unreadable_dir, 0000)
+          
+          write_recipe_books_file @config, <<-STRING
+            directory '#{unreadable_dir}'
+            directory '#{inexistent_dir}'
+          STRING
+
+          @output = capture_stdout do
+            KitchenBoy::RecipeBooks.new(@config).load_recipe_books
+          end
+        end
+
+        after do
+          FileUtils.chmod(0777, unreadable_dir)
+          Dir.rmdir(unreadable_dir)
+        end
+
+        it { expect(@config.recipe_books).not_to include(inexistent_dir) }
+        it { expect(@config.recipe_books).not_to include(unreadable_dir) }
+        it { expect(@output).to include("not readable: #{unreadable_dir}") }
+        it { expect(@output).to include("inexistent: #{inexistent_dir}") }
+      end
     end
 
   end
