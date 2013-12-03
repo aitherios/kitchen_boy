@@ -9,7 +9,7 @@ program_desc "Run, write, store and share recipes to run on your projects."
 
 version KitchenBoy::VERSION
 
-@kb_config = KitchenBoy::Config.instance
+@kb_config = KitchenBoy::Config.new
 
 flag ['home-dir'], default_value: @kb_config.home_dir
 

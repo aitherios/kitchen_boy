@@ -14,7 +14,6 @@ RSpec.configure do |config|
     $home_dir = File.join(File.expand_path(File.dirname(__FILE__)), '..', 'tmp', 'fake_home')
     FileUtils.rm_rf($home_dir) if Dir.exists?($home_dir)
     Dir.mkdir($home_dir)
-    KitchenBoy::Config.instance.home_dir = $home_dir
   end
 
   config.after(:suite) do

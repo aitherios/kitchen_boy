@@ -1,9 +1,5 @@
-require 'singleton'
-
 module KitchenBoy
   class Config
-    include Singleton
-
     attr_accessor :home_dir
     
     def initialize
