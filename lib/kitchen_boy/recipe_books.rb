@@ -16,8 +16,11 @@ module KitchenBoy
     end
 
     def git repo, message = nil
-      URI.parse(repo)
+      uri = URI.parse(repo)
+      raise URI::InvalidURIError if uri.scheme.nil?
+
       @config.recipe_books << repo unless @config.recipe_books.include?(repo)
+
     rescue URI::Error
       message ||= "Is this git repo correct?"
       log_warning "#{message} '#{repo}'"

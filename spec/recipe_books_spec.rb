@@ -28,6 +28,7 @@ describe KitchenBoy::RecipeBooks do
             git    '#{malformed_git_repo}'
             github '#{malformed_git_repo}'
             git    '#{git_repo}'
+            git    '#{github_shorthand}'
           STRING
           
           @output = capture_stdout do
@@ -36,6 +37,7 @@ describe KitchenBoy::RecipeBooks do
         end
 
         it { expect(@config.recipe_books).not_to include(malformed_git_repo) }
+        it { expect(@config.recipe_books).not_to include(github_shorthand) }
         it { expect(@config.recipe_books).to include(git_repo) }
         it { expect(@output).to include("Is this git repo correct?") }
         it { expect(@output).to include("Is this github shorthand correct?") }
