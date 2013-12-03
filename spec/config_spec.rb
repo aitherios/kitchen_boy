@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 describe KitchenBoy::Config do
-  subject { KitchenBoy::Config.new }
-  before { subject.home_dir = $home_dir }
+  subject { KitchenBoy::Config.new $home_dir }
 
   describe ".bootstrap_home_dir" do
     context "when passing a valid home_dir" do

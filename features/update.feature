@@ -12,7 +12,7 @@ Feature: kitchen_boy update
     And the file ".kitchen_boy/recipe_books" should contain:
       """
       ## Add an external recipe book from a git repository with:
-      #  git 'https://github.com/aitherios/kitchen_boy_recipe_book'
+      #  git 'https://github.com/aitherios/kitchen_boy_recipe_book.git'
       #
       ## Add an external recipe book from a github repository with:
       #  github 'aitherios/kitchen_boy_recipe_book'
