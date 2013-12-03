@@ -4,6 +4,7 @@ require 'gli'
 require 'kitchen_boy.rb'
 
 include GLI::App
+include KitchenBoy::Logger
 
 program_desc "Run, write, store and share recipes to run on your projects."
 
@@ -22,9 +23,10 @@ STRING
 command :update do |c|
   c.action do |global_options, options, args|
     if @kb_config.bootstrap_home_dir
-      puts "Updated recipe book(s)!"
+       log_success("Updated recipe book(s)!")
     else
-      raise "Error creating or accessing kitchen_boy home dir: #{@kb_config.home_dir}"
+      log_error("Error creating or accessing kitchen_boy home dir: #{@kb_config.home_dir}")
+      raise
     end
   end
 end

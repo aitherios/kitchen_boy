@@ -1,7 +1,10 @@
 require 'kitchen_boy/config'
+require 'kitchen_boy/logger'
+require 'uri'
 
 module KitchenBoy
   class RecipeBooks
+    include KitchenBoy::Logger
     attr_accessor :config
     
     def initialize config
@@ -12,12 +15,17 @@ module KitchenBoy
       self.instance_eval(IO.read(@config.recipe_books_file_path))
     end
 
-    def git repository
-      @config.recipe_books << repository
+    def git repo, message = nil
+      URI.parse(repo)
+      @config.recipe_books << repo unless @config.recipe_books.include?(repo)
+    rescue URI::Error
+      message ||= "Is this git repo correct?"
+      log_warning "#{message} '#{repo}'"
     end
 
-    def github repository
-      @config.recipe_books << "https://github.com/#{repository}.git"
+    def github repo
+      repo = "https://github.com/#{repo}.git"
+      git(repo, 'Is this github shorthand correct?')
     end
   end
 end

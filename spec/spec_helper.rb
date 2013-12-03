@@ -3,9 +3,11 @@ lib = File.join(File.expand_path(File.dirname(__FILE__)),'..','lib')
 $:.unshift(lib) unless $:.include?(lib)
 
 require 'kitchen_boy'
+
 require 'fileutils'
+require 'stringio'
 
-
+Dir[File.join(File.expand_path(File.dirname(__FILE__)), "support", "**", "*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
   config.mock_with :rspec

@@ -33,4 +33,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'gem-release', '~> 0.7.1'
 
   s.add_dependency             'gli',         '~> 2.8'
+  s.add_dependency             'rainbow',     '~> 1.1.4'
 end
