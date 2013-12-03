@@ -21,6 +21,13 @@ Feature: kitchen_boy update
       #  directory '/home/users/kitchen_boy/weird_recipe_book'
       """
 
+  Scenario: Updating kitchen_boy using an invalid home directory
+    Given kitchen_boy home directory is invalid
+    When I run kitchen_boy update
+    Then the exit status should not be 0
+    And the updating error message should be present
+
+
   Scenario: Updating kitchen_boy with default recipe book
 
   Scenario: Updating kitchen_boy with a personal recipe book added from github

@@ -5,7 +5,6 @@ module KitchenBoy
     include Singleton
 
     attr_accessor :home_dir
-    attr_accessor :recipe_books_filename
     
     def initialize
       @home_dir = File.join(ENV['HOME'],'.kitchen_boy')
@@ -19,6 +18,10 @@ module KitchenBoy
           f.write default_recipe_books
         end
       end
+
+      true
+    rescue
+      false
     end
 
     private
