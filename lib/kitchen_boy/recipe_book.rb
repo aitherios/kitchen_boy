@@ -1,9 +1,11 @@
+require 'kitchen_boy/logger'
 require 'git'
 require 'uri'
 
 module KitchenBoy
   class RecipeBook
-
+    include KitchenBoy::Logger
+    
     attr_accessor :source
     attr_accessor :config
 
@@ -24,7 +26,10 @@ module KitchenBoy
     end
 
     def update
+      raise RuntimeError, "Home dir not writable" unless File.writable?(config.home_dir)
+
       uri = URI.parse(source)
+
       case
       when uri.scheme.nil?
         FileUtils.cp_r(source, directory_path)
@@ -34,6 +39,12 @@ module KitchenBoy
       else
         Git.clone(source, directory_name, path: config.home_dir)
       end
+
+    rescue Git::GitExecuteError
+      log_warning "Unable to read this git repository: #{source}"
+
+    rescue RuntimeError
+      log_warning "Home directory: #{config.home_dir} is not writable!"
     end
     
   end

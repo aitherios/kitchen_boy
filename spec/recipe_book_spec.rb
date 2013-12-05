@@ -6,7 +6,9 @@ describe KitchenBoy::RecipeBook do
   let(:spoon_knife_recipe_book) { KitchenBoy::RecipeBook.new(config, spoon_knife_repo) }
   let(:directory) { File.join($home_dir, 'fake_dir') }
   let(:directory_recipe_book) { KitchenBoy::RecipeBook.new(config, directory) }
-  let(:file) { File.join(directory, 'teste') }
+  let(:file) { File.join(directory, 'test') }
+  let(:inaccessible_repo) { 'https://test.com/octocat/github.git' }
+  let(:inaccessible_repo_recipe_book) { KitchenBoy::RecipeBook.new(config, inaccessible_repo) }
   
   describe ".directory_name" do
     context "when URI" do
@@ -15,8 +17,8 @@ describe KitchenBoy::RecipeBook do
     end
 
     context "when a directory" do
-      subject { KitchenBoy::RecipeBook.new(config, '/teste/teste').directory_name }
-      it { should eq('teste_teste') }
+      subject { KitchenBoy::RecipeBook.new(config, '/test/test').directory_name }
+      it { should eq('test_test') }
     end
   end
 
@@ -53,17 +55,36 @@ describe KitchenBoy::RecipeBook do
       it { expect { Git.open(spoon_knife_recipe_book.directory_path) }.not_to raise_error }
     end
 
+    context "whet the git repository is inaccessible" do
+      before do
+        @output = capture_stdout do
+          inaccessible_repo_recipe_book.update
+        end
+      end
+      it { expect(@output).to include("Unable to read this git repository: #{inaccessible_repo}") }
+    end
+
     context "when the directory is given" do
       before do
         Dir.mkdir(directory) unless Dir.exist?(directory)
-        File.open(file, 'w') { |f| f.write 'teste' }
+        File.open(file, 'w') { |f| f.write 'test' }
         KitchenBoy::RecipeBook.new(config, directory).update
       end
       
       it { expect(Dir).to exist(File.join(config.home_dir, 'fake_dir')) }
-      it { expect(File).to exist(File.join(config.home_dir, 'fake_dir', 'teste')) }
+      it { expect(File).to exist(File.join(config.home_dir, 'fake_dir', 'test')) }
     end
-    
-    context "when the repository is not a git repository"
+
+    context "when home dir is not writable" do
+      before do
+        FileUtils.chmod(0555, config.home_dir)
+        @output = capture_stdout do
+          KitchenBoy::RecipeBook.new(config, directory).update
+        end
+      end
+      after { FileUtils.chmod(0755, config.home_dir) }
+
+      it { expect(@output).to include("Home directory: #{config.home_dir} is not writable!") }
+    end
   end
 end
