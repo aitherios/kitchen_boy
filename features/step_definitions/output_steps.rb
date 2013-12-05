@@ -7,7 +7,7 @@ Then /^the version should be present$/ do
 end
 
 Then(/^the updated message should be present$/) do
-  step %(the output should contain "Updated recipe book(s)!")
+  step %(the output should contain "Updated recipes!")
 end
 
 Given(/^kitchen_boy home directory is invalid$/) do

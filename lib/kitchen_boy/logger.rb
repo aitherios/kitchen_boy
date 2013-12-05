@@ -20,6 +20,12 @@ module KitchenBoy::Logger
         color:   :red,
         output:  $stderr
   end
+
+  def log_progress string
+    log message: string,
+        title:   'ongoing',
+        color:   :yellow
+  end
   
   def log options = {}
     options[:output] ||= $stdout

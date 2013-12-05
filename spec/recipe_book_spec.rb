@@ -39,20 +39,30 @@ describe KitchenBoy::RecipeBook do
     context "when the git repository was added for the first time" do
       before do
         FileUtils.rm_rf(spoon_knife_recipe_book.directory_path)
-        spoon_knife_recipe_book.update
+        @output = capture_stdout do
+          spoon_knife_recipe_book.update
+        end
       end
-      
-      it { expect { Git.open(spoon_knife_recipe_book.directory_path) }.not_to raise_error }
+
+      it "expect to fetch the git repo" do
+        expect { Git.open(spoon_knife_recipe_book.directory_path) }.not_to raise_error
+        expect(@output).to include("Fetching #{spoon_knife_recipe_book.source}")
+      end
     end
     
     context "when the git repository is beeing updated" do
       before do
         FileUtils.rm_rf(spoon_knife_recipe_book.directory_path)
         Git.clone(spoon_knife_repo, spoon_knife_recipe_book.directory_name, path: $home_dir)
-        spoon_knife_recipe_book.update
+        @output = capture_stdout do
+          spoon_knife_recipe_book.update
+        end
       end
       
-      it { expect { Git.open(spoon_knife_recipe_book.directory_path) }.not_to raise_error }
+      it "expect to pull the git repo" do
+        expect { Git.open(spoon_knife_recipe_book.directory_path) }.not_to raise_error
+        expect(@output).to include("Fetching #{spoon_knife_recipe_book.source}")
+      end
     end
 
     context "whet the git repository is inaccessible" do
@@ -68,11 +78,14 @@ describe KitchenBoy::RecipeBook do
       before do
         Dir.mkdir(directory) unless Dir.exist?(directory)
         File.open(file, 'w') { |f| f.write 'test' }
-        KitchenBoy::RecipeBook.new(config, directory).update
+        @output = capture_stdout do
+          KitchenBoy::RecipeBook.new(config, directory).update
+        end
       end
       
       it { expect(Dir).to exist(File.join(config.home_dir, 'fake_dir')) }
       it { expect(File).to exist(File.join(config.home_dir, 'fake_dir', 'test')) }
+      it { expect(@output).to include("Copying #{directory}") }
     end
 
     context "when home dir is not writable" do

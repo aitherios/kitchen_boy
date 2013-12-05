@@ -32,11 +32,14 @@ module KitchenBoy
 
       case
       when uri.scheme.nil?
+        log_progress "Copying #{source}"
         FileUtils.cp_r(source, directory_path)
       when Dir.exist?(directory_path)
+        log_progress "Fetching #{source}"
         g = Git.open(directory_path)
         g.pull
       else
+        log_progress "Fetching #{source}"
         Git.clone(source, directory_name, path: config.home_dir)
       end
 

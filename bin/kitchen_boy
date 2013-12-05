@@ -17,14 +17,14 @@ flag ['home-dir'], default_value: @config.home_dir
 desc "Update recipes"
 long_desc <<-STRING
 Fetch kitchen_boy default recipes together with the ones you specified
-in #{@config.home_dir}"
+in #{File.join(@config.home_dir, 'recipe_books')}
 STRING
 
 command :update do |c|
   c.action do |global_options, options, args|
     if @config.bootstrap_home_dir
       KitchenBoy::DSL::RecipeBooks.new(@config).update_recipe_books
-      log_success("Updated recipe book(s)!")
+      log_success("Updated recipes!")
     else
       log_error("Error creating or accessing kitchen_boy home dir: #{@config.home_dir}")
       raise

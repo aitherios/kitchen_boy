@@ -19,7 +19,7 @@ module KitchenBoy
 
       File.open(recipe_books_file_path, 'w') do |f|
         f.write default_recipe_books
-      end
+      end unless File.exists?(recipe_books_file_path)
 
       true
     rescue
