@@ -3,11 +3,11 @@ module KitchenBoy
     DEFAULT_RECIPE_BOOK = 'https://github.com/aitherios/kitchen_boy_recipe_book.git'
     
     attr_accessor :home_dir
-    attr_accessor :recipe_books
+    attr_accessor :sources
     
     def initialize home_dir = nil
       @home_dir = home_dir || File.join(ENV['HOME'],'.kitchen_boy')
-      @recipe_books = [DEFAULT_RECIPE_BOOK]
+      @sources = [DEFAULT_RECIPE_BOOK]
     end
 
     def recipe_books_file_path

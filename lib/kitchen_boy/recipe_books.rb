@@ -1,5 +1,6 @@
 require 'kitchen_boy/config'
 require 'kitchen_boy/logger'
+require 'kitchen_boy/recipe_book'
 require 'uri'
 
 module KitchenBoy
@@ -15,11 +16,12 @@ module KitchenBoy
       self.instance_eval(IO.read(@config.recipe_books_file_path))
     end
 
+
     def git repo, message = nil
       uri = URI.parse(repo)
       raise URI::InvalidURIError if uri.scheme.nil?
 
-      include_in_recipe_books(repo)
+      include_in_sources(repo)
 
     rescue URI::Error
       message ||= "When reading recipe_books, is this git repo correct? #{repo}"
@@ -38,14 +40,14 @@ module KitchenBoy
       when !File.readable?(path)
         log_warning "When reading recipe_books, this directory is not readable: #{path}"
       else
-        include_in_recipe_books(path)
+        include_in_sources(path)
       end
     end
 
     private
 
-    def include_in_recipe_books recipe_book
-      @config.recipe_books << recipe_book unless @config.recipe_books.include?(recipe_book)
+    def include_in_sources source
+      @config.sources << source unless @config.sources.include?(source)
     end
   end
 end

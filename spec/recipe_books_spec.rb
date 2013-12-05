@@ -2,13 +2,12 @@ require 'spec_helper'
 
 describe KitchenBoy::RecipeBooks do
   before { @config = KitchenBoy::Config.new $home_dir }
+  let(:github_repo) { 'https://github.com/aitherios/kitchen_boy_recipe_book.git' }
+  let(:github_shorthand) { 'aitherios/kitchen_boy_recipe_book' }
+  let(:git_repo) { 'https://aitherios@bitbucket.org/aitherios/kitchen_boy_recipe_book.git' }
+  let(:malformed_git_repo) { '://aitherios @bitbucket .org/aith' }
 
   describe ".load_recipe_books" do
-    let(:github_repo) { 'https://github.com/aitherios/kitchen_boy_recipe_book.git' }
-    let(:github_shorthand) { 'aitherios/kitchen_boy_recipe_book' }
-    let(:git_repo) { 'https://aitherios@bitbucket.org/aitherios/kitchen_boy_recipe_book.git' }
-    let(:malformed_git_repo) { '://aitherios @bitbucket .org/aith' }
-
     context "when there is git repositories" do
       before do
         write_recipe_books_file @config, <<-STRING
@@ -19,8 +18,8 @@ describe KitchenBoy::RecipeBooks do
         KitchenBoy::RecipeBooks.new(@config).load_recipe_books
       end
 
-      it { expect(@config.recipe_books).to include(github_repo) }
-      it { expect(@config.recipe_books).to include(git_repo) }
+      it { expect(@config.sources).to include(github_repo) }
+      it { expect(@config.sources).to include(git_repo) }
 
       context "that are malformed" do
         before do
@@ -36,9 +35,9 @@ describe KitchenBoy::RecipeBooks do
           end
         end
 
-        it { expect(@config.recipe_books).not_to include(malformed_git_repo) }
-        it { expect(@config.recipe_books).not_to include(github_shorthand) }
-        it { expect(@config.recipe_books).to include(git_repo) }
+        it { expect(@config.sources).not_to include(malformed_git_repo) }
+        it { expect(@config.sources).not_to include(github_shorthand) }
+        it { expect(@config.sources).to include(git_repo) }
         it { expect(@output).to include("is this git repo correct?") }
         it { expect(@output).to include("is this github shorthand correct?") }
       end
@@ -54,7 +53,7 @@ describe KitchenBoy::RecipeBooks do
         KitchenBoy::RecipeBooks.new(@config).load_recipe_books
       end
 
-      it { expect(@config.recipe_books.count).to eq(2) }
+      it { expect(@config.sources.count).to eq(2) }
     end
 
     context "when there is readable directory" do
@@ -77,7 +76,7 @@ describe KitchenBoy::RecipeBooks do
         Dir.rmdir(readonly_dir)
       end
 
-      it { expect(@config.recipe_books).to include(readonly_dir) }
+      it { expect(@config.sources).to include(readonly_dir) }
 
       context "that can't be accessed" do
         before do
@@ -98,8 +97,8 @@ describe KitchenBoy::RecipeBooks do
           Dir.rmdir(unreadable_dir)
         end
 
-        it { expect(@config.recipe_books).not_to include(inexistent_dir) }
-        it { expect(@config.recipe_books).not_to include(unreadable_dir) }
+        it { expect(@config.sources).not_to include(inexistent_dir) }
+        it { expect(@config.sources).not_to include(unreadable_dir) }
         it { expect(@output).to include("not readable: #{unreadable_dir}") }
         it { expect(@output).to include("inexistent: #{inexistent_dir}") }
       end
