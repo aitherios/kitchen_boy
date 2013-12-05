@@ -4,7 +4,7 @@ Feature: kitchen_boy update
   In can also specify new recipe books
 
   Scenario: Updating kitchen_boy in a new installation
-    Given kitchen_boy home directory is empty
+    Given an inexistent kitchen_boy home directory
     When I run kitchen_boy update
     Then the exit status should be 0
     And the updated message should be present
@@ -23,7 +23,7 @@ Feature: kitchen_boy update
       """
 
   Scenario: Updating kitchen_boy using an invalid home directory
-    Given kitchen_boy home directory is invalid
+    Given an invalid kitchen_boy home directory
     When I run kitchen_boy update
     Then the exit status should not be 0
     And the updating error message should be present

@@ -1,6 +1,21 @@
-Given(/^kitchen_boy home directory is empty$/) do
-  @home_dir = File.expand_path(File.join(['..', '..', '..'] + @dirs + ['.kitchen_boy']), __FILE__)
-  FileUtils.rm_rf(@home_dir) if Dir.exists?(@home_dir)
+Given(/^an inexistent kitchen_boy home directory$/) do
+  @home_dir = File.expand_path(File.join(@dirs + ['.kitchen_boy']), __FILE__)
+
+  FileUtils.rm_rf(@home_dir)
+end
+
+Given(/^a created kitchen_boy home directory$/) do
+  @home_dir = File.expand_path(File.join(@dirs + ['.kitchen_boy']), __FILE__)
+
+  Dir.mkdir(@home_dir) unless Dir.exist?(@home_dir)
+
+  fake_repo = File.join(@home_dir, 'fake_repo')
+  Dir.mkdir(fake_repo) unless Dir.exist?(fake_repo)
+  File.open(File.join(@home_dir, 'recipe_books'), 'w') { |f| f.write "#" }
+end
+
+Given(/^an invalid kitchen_boy home directory$/) do
+  @home_dir = '/asonthuaonethasenot'
 end
 
 When(/^I run kitchen_boy update$/) do

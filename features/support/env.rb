@@ -9,6 +9,7 @@ Before do
   @puts = true
   @original_rubylib = ENV['RUBYLIB']
   @aruba_timeout_seconds = 10
+  @dirs = [File.expand_path(File.join('..', '..', '..', 'tmp', 'fake_home'), __FILE__)]
   ENV['RUBYLIB'] = LIB_DIR + File::PATH_SEPARATOR + ENV['RUBYLIB'].to_s
 end
 
