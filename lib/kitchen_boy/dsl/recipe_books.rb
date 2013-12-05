@@ -17,6 +17,12 @@ module KitchenBoy
         self.instance_eval(IO.read(@config.recipe_books_file_path))
       end
 
+      def update_recipe_books
+        load_recipe_books
+        config.sources.each do |source|
+          KitchenBoy::RecipeBook.new(config, source).update
+        end
+      end
 
       def git repo, message = nil
         uri = URI.parse(repo)

@@ -10,22 +10,23 @@ program_desc "Run, write, store and share recipes to run on your projects."
 
 version KitchenBoy::VERSION
 
-@kb_config = KitchenBoy::Config.new
+@config = KitchenBoy::Config.new
 
-flag ['home-dir'], default_value: @kb_config.home_dir
+flag ['home-dir'], default_value: @config.home_dir
 
 desc "Update recipes"
 long_desc <<-STRING
 Fetch kitchen_boy default recipes together with the ones you specified
-in #{@kb_config.home_dir}"
+in #{@config.home_dir}"
 STRING
 
 command :update do |c|
   c.action do |global_options, options, args|
-    if @kb_config.bootstrap_home_dir
-       log_success("Updated recipe book(s)!")
+    if @config.bootstrap_home_dir
+      KitchenBoy::DSL::RecipeBooks.new(@config).update_recipe_books
+      log_success("Updated recipe book(s)!")
     else
-      log_error("Error creating or accessing kitchen_boy home dir: #{@kb_config.home_dir}")
+      log_error("Error creating or accessing kitchen_boy home dir: #{@config.home_dir}")
       raise
     end
   end
@@ -37,7 +38,7 @@ pre do |global_options, command, options, args|
   # chosen command
   # Use skips_pre before a command to skip this block
   # on that command only
-  @kb_config.home_dir = global_options['home-dir']
+  @config.home_dir = global_options['home-dir']
   true
 end
 

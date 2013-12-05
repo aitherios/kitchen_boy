@@ -9,6 +9,7 @@ Feature: kitchen_boy update
     Then the exit status should be 0
     And the updated message should be present
     And kitchen_boy home directory exists
+    And kitchen_boy default recipe book was downloaded
     And the file ".kitchen_boy/recipe_books" should contain:
       """
       ## Add an external recipe book from a git repository with:
@@ -26,16 +27,3 @@ Feature: kitchen_boy update
     When I run kitchen_boy update
     Then the exit status should not be 0
     And the updating error message should be present
-
-
-  Scenario: Updating kitchen_boy with default recipe book
-
-  Scenario: Updating kitchen_boy with a personal recipe book added from github
-
-  Scenario: Updating kitchen_boy with a personal recipe book added from git
-
-  Scenario: Updating kitchen_boy with a local recipe book
-
-  Scenario: Error when updating from a git repository
-
-  Scenario: Error when updating from a local recipe book
