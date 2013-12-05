@@ -14,11 +14,11 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     $home_dir = File.join(File.expand_path(File.dirname(__FILE__)), '..', 'tmp', 'fake_home')
-    FileUtils.rm_rf($home_dir) if Dir.exists?($home_dir)
+    FileUtils.rm_rf($home_dir)
     Dir.mkdir($home_dir)
   end
 
   config.after(:suite) do
-    FileUtils.rm_rf($home_dir) if Dir.exists?($home_dir)
+    FileUtils.rm_rf($home_dir)
   end
 end

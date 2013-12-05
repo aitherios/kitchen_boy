@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe KitchenBoy::RecipeBooks do
+describe KitchenBoy::DSL::RecipeBooks do
   before { @config = KitchenBoy::Config.new $home_dir }
   let(:github_repo) { 'https://github.com/aitherios/kitchen_boy_recipe_book.git' }
   let(:github_shorthand) { 'aitherios/kitchen_boy_recipe_book' }
@@ -15,7 +15,7 @@ describe KitchenBoy::RecipeBooks do
           github '#{github_shorthand}'
         STRING
 
-        KitchenBoy::RecipeBooks.new(@config).load_recipe_books
+        KitchenBoy::DSL::RecipeBooks.new(@config).load_recipe_books
       end
 
       it { expect(@config.sources).to include(github_repo) }
@@ -31,7 +31,7 @@ describe KitchenBoy::RecipeBooks do
           STRING
           
           @output = capture_stdout do
-            KitchenBoy::RecipeBooks.new(@config).load_recipe_books
+            KitchenBoy::DSL::RecipeBooks.new(@config).load_recipe_books
           end
         end
 
@@ -50,7 +50,7 @@ describe KitchenBoy::RecipeBooks do
           git    '#{git_repo}'
         STRING
 
-        KitchenBoy::RecipeBooks.new(@config).load_recipe_books
+        KitchenBoy::DSL::RecipeBooks.new(@config).load_recipe_books
       end
 
       it { expect(@config.sources.count).to eq(2) }
@@ -68,7 +68,7 @@ describe KitchenBoy::RecipeBooks do
           directory '#{readonly_dir}'
         STRING
 
-        KitchenBoy::RecipeBooks.new(@config).load_recipe_books
+        KitchenBoy::DSL::RecipeBooks.new(@config).load_recipe_books
       end
 
       after do
@@ -88,7 +88,7 @@ describe KitchenBoy::RecipeBooks do
           STRING
 
           @output = capture_stdout do
-            KitchenBoy::RecipeBooks.new(@config).load_recipe_books
+            KitchenBoy::DSL::RecipeBooks.new(@config).load_recipe_books
           end
         end
 
