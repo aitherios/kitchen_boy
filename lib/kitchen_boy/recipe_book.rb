@@ -1,10 +1,12 @@
 require 'kitchen_boy/logger'
+require 'kitchen_boy/recipe'
 require 'git'
 require 'uri'
 
 module KitchenBoy
   class RecipeBook
     include KitchenBoy::Logger
+    include Comparable
     
     attr_accessor :source
     attr_accessor :config
@@ -22,7 +24,19 @@ module KitchenBoy
     end
 
     def directory_path
-      File.join(config.home_dir, directory_name)
+      File.join(config.home_dir, self.directory_name)
+    end
+
+    def find name
+      name = Regexp.escape(name.strip)
+      found = []
+      Find.find(self.directory_path) do |path|
+        path = File.expand_path(path)
+        if File.basename(path) =~ /^#{name}.*/i and File.file?(path)
+          found << KitchenBoy::Recipe.new(path, self)
+        end
+      end
+      found
     end
 
     def update
@@ -48,6 +62,15 @@ module KitchenBoy
 
     rescue RuntimeError
       log_warning "Home directory: #{config.home_dir} is not writable!"
+    end
+
+    def <=> other
+      case
+      when self.source < other.source; -1
+      when self.source > other.source; 1
+      when self.source = other.source; 0
+      else -1
+      end
     end
     
   end

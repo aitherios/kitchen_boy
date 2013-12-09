@@ -10,8 +10,9 @@ Given(/^a created kitchen_boy home directory$/) do
 
   FileUtils.mkdir_p(@home_dir)
 
-  fake_repo_dir = File.join(@home_dir, 'fake_repo', 'dir')
-  FileUtils.mkdir_p(fake_repo_dir)
+  default_repo_dir = File.join(@home_dir, 'https_github_com_aitherios_kitchen_boy_recipe_book_git')
+  
+  FileUtils.mkdir_p(default_repo_dir)
   
   File.open(File.join(@home_dir, 'recipe_books'), 'w') { |f| f.write "#" }
 end

@@ -11,22 +11,16 @@ module KitchenBoy
       @config = config
     end
 
-    def find name
-      name = Regexp.escape(name.strip)
-      found = []
-      Find.find(config.home_dir) do |path|
-        if File.basename(path) =~ /^#{name}.*/i and File.file?(path)
-          found << path
-        end
+    def find_and_cook args
+      name = args[0]
+      recipes = []
+      
+      config.sources.each do |source|
+        recipes.concat(KitchenBoy::RecipeBook.new(config, source).find(name))
       end
-      found
+
+      load(recipes[0].path) if recipes.size == 1
     end
 
-    def run name
-      file = self.find(name).first
-      if File.file?(file)
-        load(file)
-      end
-    end
   end
 end
