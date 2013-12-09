@@ -1,18 +1,18 @@
 Given(/^an inexistent kitchen_boy home directory$/) do
   @home_dir = File.expand_path(File.join(@dirs + ['.kitchen_boy']))
 
-  Dir.mkdir(@dirs[0]) unless Dir.exist?(@dirs[0])
+  FileUtils.mkdir_p(@dirs[0])
   FileUtils.rm_rf(@home_dir)
 end
 
 Given(/^a created kitchen_boy home directory$/) do
   @home_dir = File.expand_path(File.join(@dirs + ['.kitchen_boy']))
 
-  Dir.mkdir(@dirs[0]) unless Dir.exist?(@dirs[0])
-  Dir.mkdir(@home_dir) unless Dir.exist?(@home_dir)
+  FileUtils.mkdir_p(@home_dir)
 
-  fake_repo = File.join(@home_dir, 'fake_repo')
-  Dir.mkdir(fake_repo) unless Dir.exist?(fake_repo)
+  fake_repo_dir = File.join(@home_dir, 'fake_repo', 'dir')
+  FileUtils.mkdir_p(fake_repo_dir)
+  
   File.open(File.join(@home_dir, 'recipe_books'), 'w') { |f| f.write "#" }
 end
 
