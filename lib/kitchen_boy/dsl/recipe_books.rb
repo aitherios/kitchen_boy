@@ -7,21 +7,18 @@ module KitchenBoy
   module DSL
     class RecipeBooks
       include KitchenBoy::Logger
+
       attr_accessor :config
+      attr_writer :sources
       
       def initialize config
         @config = config
+        @sources = []
       end
 
-      def load_recipe_books
-        self.instance_eval(IO.read(@config.recipe_books_file_path))
-      end
-
-      def update_recipe_books
-        load_recipe_books
-        config.sources.each do |source|
-          KitchenBoy::RecipeBook.new(config, source).update
-        end
+      def sources
+        self.instance_eval(IO.read(config.recipe_books_file_path))
+        @sources
       end
 
       def git repo, message = nil
@@ -54,7 +51,7 @@ module KitchenBoy
       private
 
       def include_in_sources source
-        @config.sources << source unless @config.sources.include?(source)
+        @sources << source unless @sources.include?(source)
       end
     end
   end

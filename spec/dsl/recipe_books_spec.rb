@@ -7,22 +7,18 @@ describe KitchenBoy::DSL::RecipeBooks do
   let(:git_repo) { 'https://aitherios@bitbucket.org/aitherios/kitchen_boy_recipe_book.git' }
   let(:malformed_git_repo) { '://aitherios @bitbucket .org/aith' }
 
-  describe ".update" do
-  end
-  
-  describe ".load_recipe_books" do
+  describe ".sources" do
     context "when there is git repositories" do
       before do
         write_recipe_books_file config, <<-STRING
           git    '#{git_repo}'
           github '#{github_shorthand}'
         STRING
-
-        KitchenBoy::DSL::RecipeBooks.new(config).load_recipe_books
       end
 
-      it { expect(config.sources).to include(github_repo) }
-      it { expect(config.sources).to include(git_repo) }
+      subject {  KitchenBoy::DSL::RecipeBooks.new(config).sources }
+      it { should include(github_repo) }
+      it { should include(git_repo) }
 
       context "that are malformed" do
         before do
@@ -34,13 +30,13 @@ describe KitchenBoy::DSL::RecipeBooks do
           STRING
           
           @output = capture_stdout do
-            KitchenBoy::DSL::RecipeBooks.new(config).load_recipe_books
+            @sources = KitchenBoy::DSL::RecipeBooks.new(config).sources
           end
         end
 
-        it { expect(config.sources).not_to include(malformed_git_repo) }
-        it { expect(config.sources).not_to include(github_shorthand) }
-        it { expect(config.sources).to include(git_repo) }
+        it { expect(@sources).not_to include(malformed_git_repo) }
+        it { expect(@sources).not_to include(github_shorthand) }
+        it { expect(@sources).to include(git_repo) }
         it { expect(@output).to include("is this git repo correct?") }
         it { expect(@output).to include("is this github shorthand correct?") }
       end
@@ -53,10 +49,10 @@ describe KitchenBoy::DSL::RecipeBooks do
           git    '#{git_repo}'
         STRING
 
-        KitchenBoy::DSL::RecipeBooks.new(config).load_recipe_books
+        @sources = KitchenBoy::DSL::RecipeBooks.new(config).sources
       end
 
-      it { expect(config.sources.count).to eq(2) }
+      it { expect(@sources.count).to eq(1) }
     end
 
     context "when there is readable directory" do
@@ -65,25 +61,24 @@ describe KitchenBoy::DSL::RecipeBooks do
       let(:inexistent_dir) { File.join($home_dir, 'inexistent_dir') }
       
       before do
-        Dir.mkdir(readonly_dir, 0444)
+        FileUtils.mkdir_p(readonly_dir, mode: 0444)
         
         write_recipe_books_file config, <<-STRING
           directory '#{readonly_dir}'
         STRING
-
-        KitchenBoy::DSL::RecipeBooks.new(config).load_recipe_books
       end
 
       after do
         FileUtils.chmod(0777, readonly_dir)
-        Dir.rmdir(readonly_dir)
+        FileUtils.rm_rf(readonly_dir)
       end
 
-      it { expect(config.sources).to include(readonly_dir) }
+      subject { KitchenBoy::DSL::RecipeBooks.new(config).sources }
+      it { should include(readonly_dir) }
 
       context "that can't be accessed" do
         before do
-          Dir.mkdir(unreadable_dir, 0000)
+          FileUtils.mkdir_p(unreadable_dir, mode: 0000)
           
           write_recipe_books_file config, <<-STRING
             directory '#{unreadable_dir}'
@@ -91,17 +86,17 @@ describe KitchenBoy::DSL::RecipeBooks do
           STRING
 
           @output = capture_stdout do
-            KitchenBoy::DSL::RecipeBooks.new(config).load_recipe_books
+            @sources = KitchenBoy::DSL::RecipeBooks.new(config).sources
           end
         end
 
         after do
           FileUtils.chmod(0777, unreadable_dir)
-          Dir.rmdir(unreadable_dir)
+          FileUtils.rm_rf(unreadable_dir)
         end
 
-        it { expect(config.sources).not_to include(inexistent_dir) }
-        it { expect(config.sources).not_to include(unreadable_dir) }
+        it { expect(@sources).not_to include(inexistent_dir) }
+        it { expect(@sources).not_to include(unreadable_dir) }
         it { expect(@output).to include("not readable: #{unreadable_dir}") }
         it { expect(@output).to include("inexistent: #{inexistent_dir}") }
       end

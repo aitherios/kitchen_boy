@@ -7,7 +7,7 @@ module KitchenBoy
     
     def initialize home_dir = nil
       @home_dir = home_dir || File.join(ENV['HOME'],'.kitchen_boy')
-      @sources = [DEFAULT_RECIPE_BOOK]
+      @sources = [ DEFAULT_RECIPE_BOOK ]
     end
 
     def recipe_books_file_path

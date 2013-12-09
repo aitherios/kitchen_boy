@@ -1,12 +1,14 @@
 Given(/^an inexistent kitchen_boy home directory$/) do
-  @home_dir = File.expand_path(File.join(@dirs + ['.kitchen_boy']), __FILE__)
+  @home_dir = File.expand_path(File.join(@dirs + ['.kitchen_boy']))
 
+  Dir.mkdir(@dirs[0]) unless Dir.exist?(@dirs[0])
   FileUtils.rm_rf(@home_dir)
 end
 
 Given(/^a created kitchen_boy home directory$/) do
-  @home_dir = File.expand_path(File.join(@dirs + ['.kitchen_boy']), __FILE__)
+  @home_dir = File.expand_path(File.join(@dirs + ['.kitchen_boy']))
 
+  Dir.mkdir(@dirs[0]) unless Dir.exist?(@dirs[0])
   Dir.mkdir(@home_dir) unless Dir.exist?(@home_dir)
 
   fake_repo = File.join(@home_dir, 'fake_repo')
@@ -20,6 +22,10 @@ end
 
 When(/^I run kitchen_boy update$/) do
   step %(I run `kitchen_boy --home-dir="#{@home_dir}" update`)
+end
+
+When(/^I run kitchen_boy cook "([^"]*)"$/) do |file|
+  step %(I run `kitchen_boy --home-dir="#{@home_dir}" cook #{file}`)
 end
 
 Then(/^kitchen_boy home directory exists/) do

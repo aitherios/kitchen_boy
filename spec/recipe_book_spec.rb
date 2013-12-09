@@ -9,7 +9,10 @@ describe KitchenBoy::RecipeBook do
   let(:file) { File.join(directory, 'test') }
   let(:inaccessible_repo) { 'https://test.com/octocat/github.git' }
   let(:inaccessible_repo_recipe_book) { KitchenBoy::RecipeBook.new(config, inaccessible_repo) }
-  
+
+  before { FileUtils.mkdir_p(directory) }
+  after { FileUtils.rm_rf(directory) }
+
   describe ".directory_name" do
     context "when URI" do
       subject { spoon_knife_recipe_book.directory_name }
@@ -29,7 +32,6 @@ describe KitchenBoy::RecipeBook do
     end
 
     context "when a directory" do
-      before { Dir.mkdir(directory) unless Dir.exist?(directory) }
       subject { directory_recipe_book.directory_path }
       it { should eq(File.join(config.home_dir, directory_recipe_book.directory_name)) }
     end
@@ -76,7 +78,6 @@ describe KitchenBoy::RecipeBook do
 
     context "when the directory is given" do
       before do
-        Dir.mkdir(directory) unless Dir.exist?(directory)
         File.open(file, 'w') { |f| f.write 'test' }
         @output = capture_stdout do
           KitchenBoy::RecipeBook.new(config, directory).update
