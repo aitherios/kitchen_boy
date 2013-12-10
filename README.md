@@ -7,7 +7,7 @@
 > He’s the boy who collects the onion peelings and washes down the tiles and gets it in the neck from the cooks.
 > [The Kitchen Boy by Alaa Al Aswany](http://www.fiftytwostories.com/?p=630)
  
-Run, write, store and share recepies to run on your projects.
+Run, write, store and share recipes to run on your projects.
 
 ## Installation
 
@@ -15,13 +15,13 @@ Install the gem
 
     $ gem install kitchen_boy
 
-Update the kitchen_boy recepies
+Update the kitchen_boy recipes
 
     $ kitchen_boy update
 
 ## Usage
 
-Run/Install kitchen recepies
+Run/Install kitchen recipes
 
     $ kitchen_boy install devise
     or
