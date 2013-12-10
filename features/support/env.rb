@@ -1,6 +1,17 @@
 require 'simplecov'
-SimpleCov.command_name 'Cucumber'
 require 'coveralls'
+SimpleCov.command_name 'Cucumber'
+SimpleCov.start do
+  filters.clear
+
+  add_filter do |src|
+    !(src.filename =~ /^#{SimpleCov.root}/) unless src.filename =~ /kitchen_boy/
+  end
+
+  add_filter '/spec/'
+  add_filter '/features/'
+  add_filter '/tmp/'
+end
 
 require 'aruba/cucumber'
 require 'fileutils'
@@ -16,6 +27,8 @@ Before do
   @dirs = [File.expand_path(File.join('..', '..', '..', 'tmp', 'fake_home'), __FILE__)]
   Dir.mkdir(@dirs[0]) unless Dir.exist?(@dirs[0])
   ENV['RUBYLIB'] = LIB_PATH + File::PATH_SEPARATOR + ENV['RUBYLIB'].to_s
+  
+  set_env('COVERAGE', 'true')
 end
 
 After do

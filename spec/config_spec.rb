@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 describe KitchenBoy::Config do
-  before { @config = KitchenBoy::Config.new home_dir }
+  before do
+    @config = KitchenBoy::Config.instance
+    @config.home_dir = home_dir
+  end
   after { FileUtils.rm_rf Dir.glob(File.join(home_dir, '*')) }
 
   describe ".bootstrap_home_dir" do
