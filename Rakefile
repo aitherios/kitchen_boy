@@ -27,4 +27,4 @@ Rake::RDocTask.new do |rd|
 end
 
 Coveralls::RakeTask.new
-task :default => [:spec, :features, 'coveralls:push']
+task default: [:spec, :features, 'coveralls:push']
