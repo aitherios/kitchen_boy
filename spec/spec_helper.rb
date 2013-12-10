@@ -1,3 +1,7 @@
+require 'simplecov'
+SimpleCov.command_name 'RSpec'
+require 'coveralls'
+
 ENV['PATH'] = "#{File.expand_path(File.dirname(__FILE__) + '/../bin')}#{File::PATH_SEPARATOR}#{ENV['PATH']}"
 lib = File.join(File.expand_path(File.dirname(__FILE__)),'..','lib')
 $:.unshift(lib) unless $:.include?(lib)
@@ -6,9 +10,6 @@ require 'kitchen_boy'
 
 require 'fileutils'
 require 'stringio'
-
-require 'coveralls'
-Coveralls.wear_merged!
 
 Dir[File.join(File.expand_path(File.dirname(__FILE__)), "support", "**", "*.rb")].each {|f| require f}
 

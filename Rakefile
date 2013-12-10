@@ -26,7 +26,5 @@ Rake::RDocTask.new do |rd|
   rd.rdoc_files.include("README.md","lib/**/*.rb","bin/**/*")
 end
 
-task :default => [:spec, :features]
-
 Coveralls::RakeTask.new
-task :test_with_coveralls => [:spec, :features, 'coveralls:push']
+task :default => [:spec, :features, 'coveralls:push']

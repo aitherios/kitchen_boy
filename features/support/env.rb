@@ -1,12 +1,13 @@
+require 'simplecov'
+SimpleCov.command_name 'Cucumber'
+require 'coveralls'
+
 require 'aruba/cucumber'
 require 'fileutils'
 require 'git'
 
-require 'coveralls'
-Coveralls.wear_merged!
-
 ENV['PATH'] = "#{File.expand_path(File.dirname(__FILE__) + '/../../bin')}#{File::PATH_SEPARATOR}#{ENV['PATH']}"
-LIB_DIR = File.join(File.expand_path(File.dirname(__FILE__)),'..','..','lib')
+LIB_PATH = File.join(File.expand_path(File.dirname(__FILE__)),'..','..','lib')
 
 Before do
   @puts = true
@@ -14,7 +15,7 @@ Before do
   @aruba_timeout_seconds = 10
   @dirs = [File.expand_path(File.join('..', '..', '..', 'tmp', 'fake_home'), __FILE__)]
   Dir.mkdir(@dirs[0]) unless Dir.exist?(@dirs[0])
-  ENV['RUBYLIB'] = LIB_DIR + File::PATH_SEPARATOR + ENV['RUBYLIB'].to_s
+  ENV['RUBYLIB'] = LIB_PATH + File::PATH_SEPARATOR + ENV['RUBYLIB'].to_s
 end
 
 After do
