@@ -8,7 +8,7 @@ require 'fileutils'
 require 'stringio'
 
 require 'coveralls'
-Coveralls.wear!
+Coveralls.wear_merged!
 
 Dir[File.join(File.expand_path(File.dirname(__FILE__)), "support", "**", "*.rb")].each {|f| require f}
 
