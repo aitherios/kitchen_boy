@@ -7,6 +7,9 @@ require 'kitchen_boy'
 require 'fileutils'
 require 'stringio'
 
+require 'coveralls'
+Coveralls.wear!
+
 Dir[File.join(File.expand_path(File.dirname(__FILE__)), "support", "**", "*.rb")].each {|f| require f}
 
 RSpec.configure do |config|

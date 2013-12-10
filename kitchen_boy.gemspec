@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'aruba',       '~> 0.5'
   s.add_development_dependency 'rspec',       '>= 3.0.0.beta1'
   s.add_development_dependency 'gem-release', '~> 0.7.1'
+  s.add_development_dependency 'coveralls',   '~> 0.7.0'
 
   s.add_dependency             'gli',         '~> 2.8'
   s.add_dependency             'rainbow',     '~> 1.1.4'
