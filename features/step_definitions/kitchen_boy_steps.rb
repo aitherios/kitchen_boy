@@ -3,6 +3,7 @@ Given(/^an inexistent kitchen_boy home directory$/) do
 
   FileUtils.mkdir_p(@dirs[0])
   FileUtils.rm_rf(@home_dir)
+
 end
 
 Given(/^a created kitchen_boy home directory$/) do

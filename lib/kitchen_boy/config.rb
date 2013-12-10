@@ -1,5 +1,10 @@
+require 'singleton'
+require 'fileutils'
+
 module KitchenBoy
   class Config
+    include Singleton
+
     DEFAULT_RECIPE_BOOK = 'https://github.com/aitherios/kitchen_boy_recipe_book.git'
     
     attr_accessor :home_dir
@@ -15,7 +20,7 @@ module KitchenBoy
     end
 
     def bootstrap_home_dir
-      Dir.mkdir(@home_dir) unless Dir.exists?(@home_dir)
+      FileUtils.mkdir_p(@home_dir)
 
       File.open(recipe_books_file_path, 'w') do |f|
         f.write default_recipe_books

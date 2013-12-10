@@ -11,10 +11,10 @@ Feature: kitchen_boy cook
       """
     When I run kitchen_boy cook "write_file"
     Then the exit status should be 0
-    And the output should contain:
-      """
-      Cooking fake_repo/dir write_file.rb
-      """
+    # And the output should contain:
+    #   """
+    #   Cooking fake_repo/dir write_file.rb
+    #   """
     And the file "genesis" should contain:
       """
       content

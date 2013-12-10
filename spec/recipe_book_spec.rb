@@ -1,17 +1,18 @@
 require 'spec_helper'
 
 describe KitchenBoy::RecipeBook do
-  let(:config) { KitchenBoy::Config.new $home_dir }
+  let(:config) { KitchenBoy::Config.instance }
+  before { config.home_dir = $home_dir }
 
   let(:spoon_knife_repo) { 'https://github.com/octocat/Spoon-Knife.git' }
-  let(:spoon_knife_recipe_book) { KitchenBoy::RecipeBook.new(config, spoon_knife_repo) }
+  let(:spoon_knife_recipe_book) { KitchenBoy::RecipeBook.new(spoon_knife_repo) }
 
   let(:directory) { File.join($home_dir, 'fake_dir') }
   let(:file) { File.join(directory, 'test') }
-  let(:directory_recipe_book) { KitchenBoy::RecipeBook.new(config, directory) }
+  let(:directory_recipe_book) { KitchenBoy::RecipeBook.new(directory) }
 
   let(:inaccessible_repo) { 'https://test.com/octocat/github.git' }
-  let(:inaccessible_repo_recipe_book) { KitchenBoy::RecipeBook.new(config, inaccessible_repo) }
+  let(:inaccessible_repo_recipe_book) { KitchenBoy::RecipeBook.new(inaccessible_repo) }
   
   before { FileUtils.mkdir_p(directory) }
   after { FileUtils.rm_rf(directory) }
@@ -23,7 +24,7 @@ describe KitchenBoy::RecipeBook do
     end
 
     context "when a directory" do
-      subject { KitchenBoy::RecipeBook.new(config, '/test/test').directory_name }
+      subject { KitchenBoy::RecipeBook.new('/test/test').directory_name }
       it { should eq('test_test') }
     end
   end
@@ -83,7 +84,7 @@ describe KitchenBoy::RecipeBook do
       before do
         File.open(file, 'w') { |f| f.write 'test' }
         @output = capture_stdout do
-          KitchenBoy::RecipeBook.new(config, directory).update
+          KitchenBoy::RecipeBook.new(directory).update
         end
       end
       
@@ -96,7 +97,7 @@ describe KitchenBoy::RecipeBook do
       before do
         FileUtils.chmod(0555, config.home_dir)
         @output = capture_stdout do
-          KitchenBoy::RecipeBook.new(config, directory).update
+          KitchenBoy::RecipeBook.new(directory).update
         end
       end
       after { FileUtils.chmod(0755, config.home_dir) }

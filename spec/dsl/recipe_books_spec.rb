@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe KitchenBoy::DSL::RecipeBooks do
-  let(:config) { KitchenBoy::Config.new $home_dir }
+  let(:config) { KitchenBoy::Config.instance }
+  before { config.home_dir = $home_dir }
+
   let(:github_repo) { 'https://github.com/aitherios/kitchen_boy_recipe_book.git' }
   let(:github_shorthand) { 'aitherios/kitchen_boy_recipe_book' }
   let(:git_repo) { 'https://aitherios@bitbucket.org/aitherios/kitchen_boy_recipe_book.git' }
@@ -16,7 +18,7 @@ describe KitchenBoy::DSL::RecipeBooks do
         STRING
       end
 
-      subject {  KitchenBoy::DSL::RecipeBooks.new(config).sources }
+      subject {  KitchenBoy::DSL::RecipeBooks.new().sources }
       it { should include(github_repo) }
       it { should include(git_repo) }
 
@@ -30,7 +32,7 @@ describe KitchenBoy::DSL::RecipeBooks do
           STRING
           
           @output = capture_stdout do
-            @sources = KitchenBoy::DSL::RecipeBooks.new(config).sources
+            @sources = KitchenBoy::DSL::RecipeBooks.new().sources
           end
         end
 
@@ -49,7 +51,7 @@ describe KitchenBoy::DSL::RecipeBooks do
           git    '#{git_repo}'
         STRING
 
-        @sources = KitchenBoy::DSL::RecipeBooks.new(config).sources
+        @sources = KitchenBoy::DSL::RecipeBooks.new().sources
       end
 
       it { expect(@sources.count).to eq(1) }
@@ -73,7 +75,7 @@ describe KitchenBoy::DSL::RecipeBooks do
         FileUtils.rm_rf(readonly_dir)
       end
 
-      subject { KitchenBoy::DSL::RecipeBooks.new(config).sources }
+      subject { KitchenBoy::DSL::RecipeBooks.new().sources }
       it { should include(readonly_dir) }
 
       context "that can't be accessed" do
@@ -86,7 +88,7 @@ describe KitchenBoy::DSL::RecipeBooks do
           STRING
 
           @output = capture_stdout do
-            @sources = KitchenBoy::DSL::RecipeBooks.new(config).sources
+            @sources = KitchenBoy::DSL::RecipeBooks.new().sources
           end
         end
 

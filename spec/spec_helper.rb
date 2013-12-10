@@ -1,6 +1,6 @@
 require 'simplecov'
-SimpleCov.command_name 'RSpec'
 require 'coveralls'
+SimpleCov.command_name 'RSpec'
 
 ENV['PATH'] = "#{File.expand_path(File.dirname(__FILE__) + '/../bin')}#{File::PATH_SEPARATOR}#{ENV['PATH']}"
 lib = File.join(File.expand_path(File.dirname(__FILE__)),'..','lib')

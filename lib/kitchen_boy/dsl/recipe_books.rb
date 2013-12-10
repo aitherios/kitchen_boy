@@ -1,5 +1,6 @@
 require 'kitchen_boy/config'
 require 'kitchen_boy/logger'
+require 'kitchen_boy/config_aware'
 require 'kitchen_boy/recipe_book'
 require 'uri'
 
@@ -7,12 +8,11 @@ module KitchenBoy
   module DSL
     class RecipeBooks
       include KitchenBoy::Logger
+      include KitchenBoy::ConfigAware
 
-      attr_accessor :config
       attr_writer :sources
       
-      def initialize config
-        @config = config
+      def initialize
         @sources = []
       end
 

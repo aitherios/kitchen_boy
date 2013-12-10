@@ -8,12 +8,11 @@ module KitchenBoy
   class RecipeBook
     include KitchenBoy::Logger
     include Comparable
+    include ConfigAware
     
     attr_accessor :source
-    attr_accessor :config
 
-    def initialize config, source
-      @config = config
+    def initialize source
       @source = source
     end
 
