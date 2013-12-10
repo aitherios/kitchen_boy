@@ -1,4 +1,3 @@
-require 'find'
 require 'kitchen_boy/logger'
 
 module KitchenBoy
