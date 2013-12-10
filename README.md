@@ -1,4 +1,5 @@
 # kitchen_boy
+[![TravisCI Build Status](https://travis-ci.org/aitherios/kitchen_boy.png?branch=master)](https://travis-ci.org/aitherios/kitchen_boy)
 
 > Do you know what the kitchen boy is, in the kitchen?
 > He’s the boy who collects the onion peelings and washes down the tiles and gets it in the neck from the cooks.
