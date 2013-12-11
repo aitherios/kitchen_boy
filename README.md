@@ -34,7 +34,7 @@ First of all, **thank you** for wanting to help and reading this!
 
 1. [Fork the project](https://help.github.com/articles/fork-a-repo).
 2. Create a feature branch - `git checkout -b adding_magic`
-3. Make your changes, and add some tests!
+3. Add some tests, and make your changes!
 4. Check that the tests pass - `bundle exec rake`
 5. Commit your changes - `git commit -am "Added some magic"`
 6. Push the branch to Github - `git push origin adding_magic`

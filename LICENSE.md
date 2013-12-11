@@ -1,4 +1,4 @@
-DUAL LICENSED: GPLv3 and MIT
+DUAL LICENSED: GPL-3 and MIT
 ====
 
 ## The GNU Public License, Version 3 (GPL-3)
