@@ -4,5 +4,6 @@ rvm:
   - 2.0.0
   - ruby-head
   - jruby
+  - rbx
 after_script:
   - bundle exec rake coveralls:push
