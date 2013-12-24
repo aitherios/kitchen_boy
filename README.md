@@ -42,4 +42,4 @@ First of all, **thank you** for wanting to help and reading this!
 
 ## License
 
-Dual licensed: MIT and GPL-3. See LICENSE.md for further details.
+Dual licensed: MIT and GPL-3. See [LICENSE.md](LICENSE.md) for further details.
