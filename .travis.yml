@@ -8,5 +8,6 @@ rvm:
 after_script:
   - bundle exec rake coveralls:push
 matrix:
+  fast_finish: true
   allow_failures:
     - rvm: rbx

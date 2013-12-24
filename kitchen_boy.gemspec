@@ -25,6 +25,8 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.rubyforge_project = '[none]'
 
+  s.required_ruby_version = '>= 1.9.3'
+
   s.add_development_dependency 'bundler',        '~> 1.3'
   s.add_development_dependency 'rake',           '~> 10.1'
   s.add_development_dependency 'rdoc',           '~> 4.0'
@@ -42,4 +44,9 @@ Gem::Specification.new do |s|
   s.add_dependency             'gli',         '~> 2.8'
   s.add_dependency             'rainbow',     '~> 1.1.4'
   s.add_dependency             'git',         '~> 1.2.6'
+
+  if RUBY_ENGINE == 'rbx'
+    s.add_development_dependency 'rubinius-coverage', '~> 2.0'
+    s.add_development_dependency 'rubysl',            '~> 2.0'
+  end
 end
