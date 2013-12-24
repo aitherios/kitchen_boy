@@ -7,3 +7,6 @@ rvm:
   - rbx
 after_script:
   - bundle exec rake coveralls:push
+matrix:
+  allow_failures:
+    - rvm: rbx
