@@ -2,13 +2,16 @@ language: ruby
 rvm:
   - 1.9.3
   - 2.0.0
-  - ruby-head
   - jruby
   - rbx
+  - jruby-head
+  - ruby-head
+  - rbx-head
 after_script:
   - bundle exec rake coveralls:push
 matrix:
   fast_finish: true
   allow_failures:
-    - rvm: rbx
     - rvm: ruby-head
+    - rvm: jruby-head
+    - rvm: rbx-head
