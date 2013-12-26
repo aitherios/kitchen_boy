@@ -1,12 +1,11 @@
 require 'kitchen_boy/logger'
-require 'kitchen_boy/recipe'
 require 'git'
 require 'uri'
 require 'find'
 
 module KitchenBoy
   class RecipeBook
-    include KitchenBoy::Logger
+    include Logger
     include Comparable
     include ConfigAware
     

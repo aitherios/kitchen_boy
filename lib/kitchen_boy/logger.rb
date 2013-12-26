@@ -1,7 +1,6 @@
 require 'rainbow'
 
 module KitchenBoy::Logger
-  
   def log_success string
     log message: string,
         title:   'hey',
@@ -30,7 +29,9 @@ module KitchenBoy::Logger
   def log options = {}
     options[:output] ||= $stdout
 
-    options[:output].puts(('%10.10s' % options[:title]).foreground(options[:color]) +
-                          "  " + options[:message])
+    options[:output].puts(
+      ('%10.10s' % options[:title]).foreground(options[:color]) +
+      "  " + options[:message]
+    )
   end
 end

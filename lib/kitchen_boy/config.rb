@@ -34,7 +34,8 @@ module KitchenBoy
     private
 
     def default_recipe_books
-      IO.read File.expand_path(File.join(File.dirname(__FILE__), 'default_recipe_books'))
+      IO.read File.expand_path(File.join(File.dirname(__FILE__),
+                                         'default_recipe_books'))
     end
 
   end
