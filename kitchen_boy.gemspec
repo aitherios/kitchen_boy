@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.licenses      = ['MIT', 'GPL-3']
   s.platform      = Gem::Platform::RUBY
 
-  s.files         = `git ls-files app lib`.split("\n")
+  s.files         = `git ls-files`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
 
